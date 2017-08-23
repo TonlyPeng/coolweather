@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.tcl.coolweather.gson.Forecast;
 import com.tcl.coolweather.gson.Weather;
+import com.tcl.coolweather.service.AutoUpdateService;
 import com.tcl.coolweather.util.HttpUtil;
 import com.tcl.coolweather.util.Utility;
 
@@ -145,6 +146,8 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.apply();
                             mWeatherId = weather.basic.weatherId;
                             showWeatherInfo(weather);
+                            Intent intent1 = new Intent(WeatherActivity.this, AutoUpdateService.class);
+                            startService(intent1);
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
@@ -231,8 +234,8 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
-        //Intent intent = new Intent(this, AutoUpdateService.class);
-        //startService(intent);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
 }
